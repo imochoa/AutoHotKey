@@ -1,0 +1,59 @@
+﻿
+; Todo only on darktide!
+; IfWinActive "Darktide", "ahk_exe", "Darktide.exe"
+; HotIfWinActive "ahk_exe Darktide"
+; Warhammer 40,000: Darktide
+; ahk_class main_window
+; ahk_exe Darktide.exe
+; ahk_pid 19260
+; ahk_id 265564
+
+
+; Use LeftAlt to toggle script On/Off
+#SuspendExempt
+LAlt::{
+SoundBeep
+Suspend
+}
+#SuspendExempt False
+
+
+; Fast swap
+; q::{
+; global MODE
+; if (MODE > 2){
+;   setMode(1)
+; } else {
+;   setMode(Map(1,2,2,1).get(MODE))
+; }
+; setMacro()
+; Return
+; }
+
+; Dodge slide
+; Enable with:  Hotkey "ButtonYouWant", dodgeSlideHotkey, "On"
+dodgeSlideHotkey(thisKey){
+; todo only if A,D or S pressed as well!
+if (GetKeyState("A") OR GetKeyState("S") OR GetKeyState("D")){
+    ; SoundBeep ; debugging
+    Send "{Space down}"
+    Sleep 100 ; depends on weapon
+    Send "{Space up}"
+    Sleep 100 ; depends on weapon
+    ; Dodge button (usually shift, for me E)
+    Send "{E down}"
+    Sleep 50
+    Send "{E up}"
+    }
+}
+
+; toggle key
+; Enable with:  Hotkey "$ButtonYouWant", toggleKey, "On"
+; $ REQUIRED TO AVOID RECURSION!
+toggleKey(thisKey){
+pos:=Map(true,"up",false,"down").get(GetKeyState(thisKey))
+; MsgBox thisKey
+; MsgBox pos
+Send "{%thisKey% %pos%}"
+Return
+}

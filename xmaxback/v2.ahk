@@ -1,0 +1,157 @@
+﻿#Requires AutoHotkey v2.0
+#SingleInstance
+A_MaxHotkeysPerInterval := 200
+
+; Todo only on darktide!
+; IfWinActive "Darktide", "ahk_exe", "Darktide.exe"
+; HotIfWinActive "ahk_exe Darktide"
+; Warhammer 40,000: Darktide
+; ahk_class main_window
+; ahk_exe Darktide.exe
+; ahk_pid 19260
+; ahk_id 265564
+
+
+; Use LeftAlt to toggle script On/Off
+#SuspendExempt
+LAlt::{
+SoundBeep
+Suspend
+}
+#SuspendExempt False
+
+; Times
+
+; [1Hold, 2Hold] ms
+; ToDo Add release?
+
+; Zealot
+atroxAxe:=[50,650]
+flamethrower:=[50,50]
+bolter:=[0,0]
+
+; Psyker Psykinetic
+surgeStaff:=[50,50]
+psyker2:=[0,50]
+
+; ON/OFF, quick delay, slow delay
+IDX:=1
+LSleepMap := Map(
+1, atroxAxe,
+2, psyker2,
+3, [0,0],
+4, [0,0],
+5, [0,0],
+)
+
+
+
+; When changing Weapon
+MODE:=1
+
+setMode(m){
+    ; Update current Mode
+    Send(m)
+    global MODE
+    MODE:=m
+}
+
+LSpammer(ThisHotKey){
+  ; Critical ; Is Critical necessary?
+  While GetKeyState("LButton","P")
+  {
+      ; SoundBeep
+      Click "Down"
+      Sleep LSleepMap.Get(MODE)[IDX]
+      ; MsgBox LSleepMap.Get(MODE)[IDX]
+      Click "Up"
+      Sleep 50
+  }
+
+Return
+}
+
+setMacro(){
+    ; MsgBox LSleepMap.Get(MODE)[IDX]
+    if (LSleepMap.Get(MODE)[IDX]){
+    ; MsgBox "macro ON!"
+    Hotkey "LButton", LSpammer, "On"
+    } else {
+        ; MsgBox "macro OFF! Removing!"
+        Hotkey "LButton", LSpammer, "Off"
+    }
+}
+
+XButton1::{ ; Swap to other timing
+global IDX
+IDX:=Map(1,2,2,1).get(IDX)
+setMacro()
+Return
+}
+
+
+
+
+
+; "$" prefix avoids recursive infinite loops
+$1::{ ; MELEE WEAPON
+setMode(1)
+setMacro()
+return
+}
+$2::{ ; RANGED WEAPON
+setMode(2)
+setMacro()
+Return
+}
+$3::{ ; EXTRA
+setMode(3)
+setMacro()
+Return
+}
+$4::{
+setMode(4)
+setMacro()
+Return
+}
+$5::{ ; AUSPEX
+setMode(5)
+setMacro()
+Return
+}
+$z::{ ; AUSPEX
+setMode(5)
+setMacro()
+Return
+}
+
+; Fast swap
+; q::{
+; global MODE
+; if (MODE > 2){
+;   setMode(1)
+; } else {
+;   setMode(Map(1,2,2,1).get(MODE))
+; }
+; setMacro()
+; Return
+; }
+
+; Dodge slide
+Capslock::{
+    ; todo only if A,D or S pressed as well!
+if (GetKeyState("A") OR GetKeyState("S") OR GetKeyState("D")){
+    SoundBeep
+
+    Send "{Space down}"
+    Sleep 100 ; depends on weapon
+    Send "{Space up}"
+    Sleep 100 ; depends on weapon
+    ; Dodge button (usually shift, for me E)
+    Send "{E down}"
+    Sleep 50
+    Send "{E up}"
+}
+Return
+}
+
