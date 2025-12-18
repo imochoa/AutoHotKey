@@ -1,21 +1,17 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "configurations": [
-{
-    "type": "autohotkey",
-    "request": "launch",
-    "name": "Launch AHK",
-    "runtime":"C:/Users/nacho/AppData/Local/Programs/AutoHotkey/v2/AutoHotkey64",
-    "program": "${file}",
-    "args": [],
-    "env": {}
-}
-
-    ],
-    // :"C:\\Users\\nacho\\AppData\\Local\\Programs\\AutoHotkey\\v2\\AutoHotkey64",
-    // C:\Users\nacho\AppData\Local\Programs\AutoHotkey\v2
-    // "runtime":"${userHome}\\AppData\\Local\\Programs\\AutoHotkey\\v2\\AutoHotkey64.exe",
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "autohotkey",
+      "request": "launch",
+      "name": "Launch AHK",
+      "runtime": "C:/Users/XXXXXX/AppData/Local/Programs/AutoHotkey/v2/AutoHotkey64",
+      "program": "${file}",
+      "args": [],
+      "env": {}
+    }
+  ]
 }

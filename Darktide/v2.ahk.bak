@@ -2,11 +2,6 @@
 #SingleInstance
 A_MaxHotkeysPerInterval := 200
 
-#Include lib.ahk
-
-
-; https://www.reddit.com/r/Vermintide/comments/8q9804/autohotkey_macro_sharing_my_spam_attack_and_spam/
-
 ; Todo only on darktide!
 ; IfWinActive "Darktide", "ahk_exe", "Darktide.exe"
 ; HotIfWinActive "ahk_exe Darktide"
@@ -16,6 +11,14 @@ A_MaxHotkeysPerInterval := 200
 ; ahk_pid 19260
 ; ahk_id 265564
 
+
+; Use LeftAlt to toggle script On/Off
+#SuspendExempt
+LAlt::{
+SoundBeep
+Suspend
+}
+#SuspendExempt False
 
 ; Times
 
@@ -134,28 +137,21 @@ Return
 ; Return
 ; }
 
-; Dodge slide mapping
-Hotkey "Capslock", dodgeSlideHotkey, "On"
-; Toggle R venting
-; Hotkey "R", toggleKey, "On"
-; $R::{
-;MsgBox GetKeyState("R", "P")
-; pos:=Map(1,"up",0,"down").get(GetKeyState("R", "T"))
-; MsgBox thisKey
-; MsgBox pos
-; Send "{R %pos%}"
-; Return
-; }
+; Dodge slide
+Capslock::{
+    ; todo only if A,D or S pressed as well!
+if (GetKeyState("A") OR GetKeyState("S") OR GetKeyState("D")){
+    SoundBeep
 
-;; WoRks!
-KeyDown:=0
-$R::{
-global KeyDown
-KeyDown := !KeyDown
-If KeyDown {
-	Send "{R down}"
-} Else {
-	Send "{R up}"
-    }
+    Send "{Space down}"
+    Sleep 100 ; depends on weapon
+    Send "{Space up}"
+    Sleep 100 ; depends on weapon
+    ; Dodge button (usually shift, for me E)
+    Send "{E down}"
+    Sleep 50
+    Send "{E up}"
+}
 Return
 }
+
